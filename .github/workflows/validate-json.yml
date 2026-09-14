@@ -1,0 +1,24 @@
+name: Validate powerhint JSON
+
+on:
+  push:
+    paths:
+      - "powerhint.json"
+      - ".github/workflows/validate-json.yml"
+  pull_request:
+    paths:
+      - "powerhint.json"
+      - ".github/workflows/validate-json.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Parse powerhint.json
+        run: python -m json.tool powerhint.json > /dev/null
